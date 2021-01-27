@@ -54,7 +54,12 @@ class Receiver:
                 else:
                     try:
                         key = int(key)
+                        if key == 0:
+                            continue
                     except TypeError as e:
+                        print(e)
+                        continue
+                    except ValueError as e:
                         print(e)
                         continue
                 j.set_button(key, event)
