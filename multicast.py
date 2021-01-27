@@ -24,8 +24,6 @@ from pynput.keyboard import Key, Controller
 from pynput.mouse import Button, Controller as Mouse
 
 
-import pyvjoy
-
 def main():
     group = MYGROUP_6 if "-6" in sys.argv[1:] else MYGROUP_4
 
@@ -79,6 +77,7 @@ def read_data(s):
     return data, sender
 
 def receiver(group):
+    import pyvjoy
     keys = Controller()
     mouse = Mouse()
     # Look up multicast group address in name server and find out IP version
