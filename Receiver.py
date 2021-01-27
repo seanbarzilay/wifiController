@@ -6,7 +6,7 @@ from pynput.keyboard import Key
 
 class Receiver:
     sock = None
-    myport = 8123
+    port = 8123
     address = None
     joy = None
 
@@ -18,7 +18,7 @@ class Receiver:
         # Allow multiple copies of this program on one machine
         # (not strictly needed)
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind(('', Receiver.myport))
+        s.bind(('', Receiver.port))
         group_bin = socket.inet_pton(Receiver.address[0], Receiver.address[4][0])
         # Join group
         if Receiver.address[0] == socket.AF_INET:  # IPv4
