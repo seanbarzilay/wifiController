@@ -1,8 +1,6 @@
 import socket
 import struct
 
-import pyvjoy
-
 from pynput.keyboard import Key
 
 
@@ -13,6 +11,7 @@ class Receiver:
     joy = None
 
     def __init__(self, group) -> None:
+        import pyvjoy
         Receiver.address = socket.getaddrinfo(group, None)[0]
 
         s = socket.socket(Receiver.address[0], socket.SOCK_DGRAM)
@@ -55,7 +54,7 @@ class Receiver:
                 else:
                     try:
                         key = int(key)
-                    except Exception as e:
+                    except TypeError as e:
                         print(e)
                         continue
                 j.set_button(key, event)
