@@ -1,8 +1,11 @@
+from pynput.mouse import Controller as Mouse
 from Sender import Sender
 
 
 class DesktopSender(Sender):
     
+    mouse = Mouse()
+
     def __init__(self, group) -> None:
         super().__init__(group)
         print("starting DesktopSender...")
@@ -15,6 +18,8 @@ class DesktopSender(Sender):
         listener2.start()
 
         listener.join()
+
+        DesktopSender.mouse.position = (0, 0)
 
     @staticmethod
     def on_press(key):
@@ -49,6 +54,7 @@ class DesktopSender(Sender):
         print('Pointer moved to {0}'.format((x, y)))
         k = f"moved {x},{y}"
         Sender.sock.sendto(k.encode(), (Sender.address[4][0], Sender.myport))
+        DesktopSender.mouse.position = (0, 0)
 
     @staticmethod
     def on_click(x, y, button, pressed):

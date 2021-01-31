@@ -29,7 +29,7 @@ class KeyboardReceiver(Receiver):
             elif event == "moved":
                 x, y = actions.split(',')
                 pos = (int(x.split('.')[0]), int(y.split('.')[0]))
-                self.mouse.position = pos
+                self.mouse.position = (self.mouse.position[0] + pos[0], self.mouse.position[1] + pos[1])
             elif event == "clicked":
                 button, pressed, x, y = actions.split(',')
                 if pressed == 'True':
