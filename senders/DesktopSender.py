@@ -1,5 +1,5 @@
 from pynput.mouse import Controller as Mouse
-from Sender import Sender
+from core.Sender import Sender
 
 
 class DesktopSender(Sender):

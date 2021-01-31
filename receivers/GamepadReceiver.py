@@ -1,4 +1,4 @@
-from Receiver import Receiver
+from core.Receiver import Receiver
 from pynput.keyboard import Key
 
 
