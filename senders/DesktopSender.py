@@ -51,10 +51,11 @@ class DesktopSender(Sender):
 
     @staticmethod
     def on_move(x, y):
-        print('Pointer moved to {0}'.format((x, y)))
-        k = f"moved {x},{y}"
-        Sender.sock.sendto(k.encode(), (Sender.address[4][0], Sender.myport))
-        DesktopSender.mouse.position = (0, 0)
+        if x != 0 and y != 0:
+            print('Pointer moved to {0}'.format((x, y)))
+            k = f"moved {x},{y}"
+            Sender.sock.sendto(k.encode(), (Sender.address[4][0], Sender.myport))
+            DesktopSender.mouse.position = (0, 0)
 
     @staticmethod
     def on_click(x, y, button, pressed):
