@@ -57,7 +57,7 @@ class DesktopSender(Sender):
     def on_move(x, y):
         if x != DesktopSender.middle[0] and y != DesktopSender.middle[1]:
             print('Pointer moved to {0}'.format((x, y)))
-            k = f"moved {x},{y}"
+            k = f"moved {x - DesktopSender.middle[0]},{y - DesktopSender.middle[1]}"
             Sender.sock.sendto(k.encode(), (Sender.address[4][0], Sender.myport))
             DesktopSender.mouse.position = DesktopSender.middle
 
