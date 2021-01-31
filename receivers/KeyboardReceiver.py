@@ -1,3 +1,5 @@
+import math
+
 from pynput.keyboard import Key, Controller as Keyboard
 from pynput.mouse import Button, Controller as Mouse
 
@@ -28,8 +30,8 @@ class KeyboardReceiver(Receiver):
                 
             elif event == "moved":
                 x, y = actions.split(',')
-                pos = (int(x.split('.')[0]), int(y.split('.')[0]))
-                self.mouse.position = (self.mouse.position[0] + pos[0], self.mouse.position[1] + pos[1])
+                pos = (int(math.ceil(float(x))), int(math.ceil(float(y))))
+                self.mouse.move(pos[0], pos[1])
             elif event == "clicked":
                 button, pressed, x, y = actions.split(',')
                 if pressed == 'True':

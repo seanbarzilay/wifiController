@@ -4,6 +4,7 @@ from Sender import Sender
 
 class DesktopSender(Sender):
     
+    middle = None
     mouse = Mouse()
 
     def __init__(self, group) -> None:
@@ -14,12 +15,15 @@ class DesktopSender(Sender):
         listener.start()  # start to listen on a separate thread
 
         from pynput import mouse
+        from screeninfo import get_monitors
+        monitor = get_monitors()[0]
+        DesktopSender.middle = (monitor.width / 2, monitor.height/ 2)
+        DesktopSender.mouse.position = DesktopSender.middle
         listener2 = mouse.Listener(on_move=DesktopSender.on_move, on_click=DesktopSender.on_click)
         listener2.start()
 
         listener.join()
 
-        DesktopSender.mouse.position = (0, 0)
 
     @staticmethod
     def on_press(key):
@@ -51,11 +55,11 @@ class DesktopSender(Sender):
 
     @staticmethod
     def on_move(x, y):
-        if x != 0 and y != 0:
+        if x != DesktopSender.middle[0] and y != DesktopSender.middle[1]:
             print('Pointer moved to {0}'.format((x, y)))
             k = f"moved {x},{y}"
             Sender.sock.sendto(k.encode(), (Sender.address[4][0], Sender.myport))
-            DesktopSender.mouse.position = (0, 0)
+            DesktopSender.mouse.position = DesktopSender.middle
 
     @staticmethod
     def on_click(x, y, button, pressed):
