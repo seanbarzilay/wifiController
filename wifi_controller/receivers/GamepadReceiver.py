@@ -1,4 +1,4 @@
-from core.Receiver import Receiver
+from wifi_controller.core.Receiver import Receiver
 from pynput.keyboard import Key
 
 

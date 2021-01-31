@@ -1,5 +1,5 @@
 from pynput.mouse import Controller as Mouse
-from core.Sender import Sender
+from wifi_controller.core.Sender import Sender
 
 
 class DesktopSender(Sender):

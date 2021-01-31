@@ -26,7 +26,7 @@ def main():
 
 def start_sender(group):
     if args.type == 'desktop':
-        from senders.DesktopSender import DesktopSender
+        from wifi_controller.senders.DesktopSender import DesktopSender
         DesktopSender(group)
     elif args.type == 'gpio':
         pass
@@ -34,10 +34,10 @@ def start_sender(group):
 
 def start_receiver(group):
     if args.keyboard:
-        from receivers.KeyboardReceiver import KeyboardReceiver
+        from wifi_controller.receivers.KeyboardReceiver import KeyboardReceiver
         receiver = KeyboardReceiver(group)
     else:
-        from receivers.GamepadReceiver import GamepadReceiver
+        from wifi_controller.receivers.GamepadReceiver import GamepadReceiver
         receiver = GamepadReceiver(group)
     receiver.start()
 

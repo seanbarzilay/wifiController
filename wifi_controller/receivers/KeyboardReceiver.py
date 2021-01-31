@@ -3,7 +3,7 @@ import math
 from pynput.keyboard import Key, Controller as Keyboard
 from pynput.mouse import Button, Controller as Mouse
 
-from core.Receiver import Receiver
+from wifi_controller.core.Receiver import Receiver
 
 
 class KeyboardReceiver(Receiver):
