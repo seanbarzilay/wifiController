@@ -9,6 +9,10 @@ class KeyboardReceiver(Receiver):
     def __init__(self, group) -> None:
         super().__init__(group)
         self.keyboard = Keyboard()
+        self.actions = {
+            'press': self.keyboard.press,
+            'release': self.keyboard.release
+        }
         self.mouse = Mouse()
 
     def start(self):
@@ -20,7 +24,7 @@ class KeyboardReceiver(Receiver):
                     key = Key[actions]
                 else:
                     key = actions
-                self.keyboard[event](key)
+                self.actions[event](key)
                 
             elif event == "moved":
                 x, y = actions.split(',')

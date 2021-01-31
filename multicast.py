@@ -2,8 +2,8 @@
 
 import argparse
 
-from GamepadReceiver import GamepadReceiver
-from KeyboardReceiver import KeyboardReceiver
+from receivers.GamepadReceiver import GamepadReceiver
+from receivers.KeyboardReceiver import KeyboardReceiver
 from Sender import Sender
 
 group_4 = '225.0.0.250'
@@ -14,6 +14,7 @@ parser.add_argument('-6', '--v6', default=False, action=argparse.BooleanOptional
 parser.add_argument('-s', '--sender', default=False, action=argparse.BooleanOptionalAction, help='send data')
 parser.add_argument('-k', '--keyboard', default=False, action=argparse.BooleanOptionalAction, help='emulate keyboard '
                                                                                                    'and mouse')
+parser.add_argument('-t', '--type', default='desktop', help='reads input from a desktop machine')
 
 args = parser.parse_args()
 
@@ -28,7 +29,10 @@ def main():
 
 
 def start_sender(group):
-    Sender(group)
+    if args.type == 'desktop':
+        Sender(group)
+    elif args.type == 'gpio':
+        pass
 
 
 def start_receiver(group):
