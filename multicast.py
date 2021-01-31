@@ -2,10 +2,6 @@
 
 import argparse
 
-from receivers.GamepadReceiver import GamepadReceiver
-from receivers.KeyboardReceiver import KeyboardReceiver
-from Sender import Sender
-
 group_4 = '225.0.0.250'
 group_6 = 'ff15:7079:7468:6f6e:6465:6d6f:6d63:6173'
 
@@ -30,15 +26,18 @@ def main():
 
 def start_sender(group):
     if args.type == 'desktop':
-        Sender(group)
+        from senders.DesktopSender import DesktopSender
+        DesktopSender(group)
     elif args.type == 'gpio':
         pass
 
 
 def start_receiver(group):
     if args.keyboard:
+        from receivers.KeyboardReceiver import KeyboardReceiver
         receiver = KeyboardReceiver(group)
     else:
+        from receivers.GamepadReceiver import GamepadReceiver
         receiver = GamepadReceiver(group)
     receiver.start()
 

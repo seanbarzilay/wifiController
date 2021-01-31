@@ -5,6 +5,7 @@ class DesktopSender(Sender):
     
     def __init__(self, group) -> None:
         super().__init__(group)
+        print("starting DesktopSender...")
         from pynput import keyboard
         listener = keyboard.Listener(on_press=DesktopSender.on_press, on_release=DesktopSender.on_release)
         listener.start()  # start to listen on a separate thread
