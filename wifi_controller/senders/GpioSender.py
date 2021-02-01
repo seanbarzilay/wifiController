@@ -93,7 +93,6 @@ class GpioSender(Sender):
         player_one_button = Button(22)
         player_two_button = Button(23)
 
-
         a_button.when_pressed = lambda: press(2)
         a_button.when_released = lambda: release(2)
 
@@ -105,6 +104,9 @@ class GpioSender(Sender):
 
         y_button.when_pressed = lambda: press(3)
         y_button.when_released = lambda: release(3)
+
+        start_button.when_pressed = lambda: press(8)
+        start_button.when_released = lambda: release(8)
 
         while True:
             try:

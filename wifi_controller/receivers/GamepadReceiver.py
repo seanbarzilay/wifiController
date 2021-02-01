@@ -66,15 +66,29 @@ class GamepadReceiver(Receiver):
                 j.set_button(key, event)
             elif event == "moved":
                 x, y = actions.split(',')
-                pos = (int(x.split('.')[0]), int(y.split('.')[0]))
+                if x == '-800.0':  # left
+                    j.set_button(15, 1)
+                elif x == '840.0':  # right
+                    j.set_button(16, 1)
+                else:
+                    j.set_button(15, 0)
+                    j.set_button(16, 0)
+                if y == '-800.0':  # up
+                    j.set_button(13, 1)
+                elif y == '840.0':  # down
+                    j.set_button(14, 1)
+                else:
+                    j.set_button(13, 0)
+                    j.set_button(14, 0)
+                # pos = (int(x.split('.')[0]), int(y.split('.')[0]))
                 # pos = (self.translate(pos[0], -800, 840, min, max), self.translate(pos[1], -800, 840, min, max))
-                # dx = pos[0] - last_pos[0]
-                # dy = pos[1] - last_pos[1]
-                print(pos)
-                j.set_axis(pyvjoy.HID_USAGE_X, int(pos[0]))
-                j.set_axis(pyvjoy.HID_USAGE_Y, int(pos[1]))
+                # # dx = pos[0] - last_pos[0]
+                # # dy = pos[1] - last_pos[1]
+                # print(pos)
+                # j.set_axis(pyvjoy.HID_USAGE_X, int(middle + (int(pos[0]) * 100)))
+                # j.set_axis(pyvjoy.HID_USAGE_Y, int(middle + (int(pos[1]) * 100)))
 
-                last_pos = pos
+                # last_pos = pos
             elif event == "clicked":
                 button, pressed, x, y = actions.split(',')
                 if pressed == "True":
