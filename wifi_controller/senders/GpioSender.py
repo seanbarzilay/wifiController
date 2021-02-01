@@ -105,8 +105,8 @@ class GpioSender(Sender):
         y_button.when_pressed = lambda: press(3)
         y_button.when_released = lambda: release(3)
 
-        start_button.when_pressed = lambda: press(8)
-        start_button.when_released = lambda: release(8)
+        start_button.when_pressed = lambda: press(9)
+        start_button.when_released = lambda: release(9)
 
         while True:
             try:
