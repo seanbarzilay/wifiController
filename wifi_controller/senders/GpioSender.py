@@ -108,8 +108,8 @@ class GpioSender(Sender):
 
         while True:
             try:
-                y = 800 - ads_read(0)
-                x = ads_read(1) - 800
+                y = ads_read(0)
+                x = ads_read(1)
             except IOError:
                 continue
             if abs(x) < MOUSE_DEADZONE:

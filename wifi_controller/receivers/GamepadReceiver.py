@@ -8,9 +8,22 @@ class GamepadReceiver(Receiver):
         super().__init__(group)
         self.joys = {}
 
+    def translate(self, value, leftMin, leftMax, rightMin, rightMax):
+        # Figure out how 'wide' each range is
+        leftSpan = leftMax - leftMin
+        rightSpan = rightMax - rightMin
+
+        # Convert the left range into a 0-1 range (float)
+        valueScaled = float(value - leftMin) / float(leftSpan)
+
+        # Convert the 0-1 range into a value in the right range.
+        return rightMin + (valueScaled * rightSpan)
+
     def start(self):
         import pyvjoy
         middle = 0x8000 / 2
+        min = -800
+        max = 840
         last_pos = (0, 0)
         while True:  # TODO Remove infinite loop
             data, sender = Receiver.read_data()
@@ -54,10 +67,12 @@ class GamepadReceiver(Receiver):
             elif event == "moved":
                 x, y = actions.split(',')
                 pos = (int(x.split('.')[0]), int(y.split('.')[0]))
+                # pos = (self.translate(pos[0], -800, 840, min, max), self.translate(pos[1], -800, 840, min, max))
                 # dx = pos[0] - last_pos[0]
                 # dy = pos[1] - last_pos[1]
-                j.set_axis(pyvjoy.HID_USAGE_X, int(middle + int(str(int(x) * 100), 16)))
-                j.set_axis(pyvjoy.HID_USAGE_Y, int(middle + int(str(int(y) * 100), 16)))
+                print(pos)
+                j.set_axis(pyvjoy.HID_USAGE_X, int(pos[0]))
+                j.set_axis(pyvjoy.HID_USAGE_Y, int(pos[1]))
 
                 last_pos = pos
             elif event == "clicked":
