@@ -24,7 +24,7 @@ class GpioSender(Sender):
         gpio.setwarnings(False)
         gpio.setmode(gpio.BCM)
 
-        MOUSE_SENSITIVITY = 4  # 0-10
+        MOUSE_SENSITIVITY = 4.0  # 0-10
         MOUSE_DEADZONE = 40  # Values under this are zeroed
         ###################################### ADS1015 microdriver #################################
         # Register and other configuration values:
