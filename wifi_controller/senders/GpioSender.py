@@ -1,3 +1,5 @@
+from time import sleep
+
 from core.Sender import Sender
 
 
@@ -118,3 +120,4 @@ class GpioSender(Sender):
             # y = y >> (10 - MOUSE_SENSITIVITY)
             y = -y
             Sender.sock.sendto(f"moved {x},{y}".encode(), (Sender.address[4][0], Sender.myport))
+            sleep(0.01)

@@ -54,10 +54,10 @@ class GamepadReceiver(Receiver):
             elif event == "moved":
                 x, y = actions.split(',')
                 pos = (int(x.split('.')[0]), int(y.split('.')[0]))
-                dx = pos[0] - last_pos[0]
-                dy = pos[1] - last_pos[1]
-                j.set_axis(pyvjoy.HID_USAGE_X, int(middle + int(str(int(dx) * 100), 16)))
-                j.set_axis(pyvjoy.HID_USAGE_Y, int(middle + int(str(int(dy) * 100), 16)))
+                # dx = pos[0] - last_pos[0]
+                # dy = pos[1] - last_pos[1]
+                j.set_axis(pyvjoy.HID_USAGE_X, int(middle + int(str(int(x) * 100), 16)))
+                j.set_axis(pyvjoy.HID_USAGE_Y, int(middle + int(str(int(y) * 100), 16)))
 
                 last_pos = pos
             elif event == "clicked":
