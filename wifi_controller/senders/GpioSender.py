@@ -1,4 +1,4 @@
-from wifi_controller.core.Sender import Sender
+from core.Sender import Sender
 
 
 class GpioSender(Sender):
@@ -13,16 +13,13 @@ class GpioSender(Sender):
         select_button = Button(20)
         player_one_button = Button(22)
         player_two_button = Button(23)
-        a_button.data = 1
-        a_button.when_pressed = lambda: Sender.sock.sendto(f"pressed {a_button.data}".encode(), (Sender.address[4][0], Sender.myport))
 
-        x_button.data = 2
-        x_button.when_pressed = lambda: Sender.sock.sendto(f"pressed {x_button.data}".encode(),
+        a_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 1".encode(), (Sender.address[4][0], Sender.myport))
+
+        x_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 2".encode(),
                                                            (Sender.address[4][0], Sender.myport))
-        b_button.data = 3
-        b_button.when_pressed = lambda: Sender.sock.sendto(f"pressed {b_button.data}".encode(),
+        b_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 3".encode(),
                                                            (Sender.address[4][0], Sender.myport))
 
-        y_button.data = 4
-        y_button.when_pressed = lambda: Sender.sock.sendto(f"pressed {y_button.data}".encode(),
+        y_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 4".encode(),
                                                            (Sender.address[4][0], Sender.myport))

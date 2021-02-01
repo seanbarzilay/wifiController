@@ -1,5 +1,3 @@
-from pynput import keyboard, mouse
-
 import struct
 import socket
 import time
