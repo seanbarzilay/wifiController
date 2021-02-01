@@ -108,8 +108,8 @@ class GpioSender(Sender):
 
         while True:
             try:
-                y = ads_read(0)
-                x = ads_read(1)
+                y = 800 - ads_read(0)
+                x = ads_read(1) - 800
             except IOError:
                 continue
             if abs(x) < MOUSE_DEADZONE:
@@ -120,4 +120,4 @@ class GpioSender(Sender):
             # y = y >> (10 - MOUSE_SENSITIVITY)
             y = -y
             Sender.sock.sendto(f"moved {x},{y}".encode(), (Sender.address[4][0], Sender.myport))
-            sleep(0.01)
+            sleep(0.1)
