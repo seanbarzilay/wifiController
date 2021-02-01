@@ -66,16 +66,18 @@ class GamepadReceiver(Receiver):
                 j.set_button(key, event)
             elif event == "moved":
                 x, y = actions.split(',')
-                if x == '-800.0':  # left
+                x = float(x)
+                y = float(y)
+                if x <= - 700:  # left
                     j.set_button(15, 1)
-                elif x == '840.0':  # right
+                elif x >= 800:  # right
                     j.set_button(16, 1)
                 else:
                     j.set_button(15, 0)
                     j.set_button(16, 0)
-                if y == '-800.0':  # up
+                if y <= -700:  # up
                     j.set_button(13, 1)
-                elif y == '840.0':  # down
+                elif y >= 800:  # down
                     j.set_button(14, 1)
                 else:
                     j.set_button(13, 0)
