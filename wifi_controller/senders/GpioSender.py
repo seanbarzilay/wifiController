@@ -24,7 +24,7 @@ class GpioSender(Sender):
         gpio.setwarnings(False)
         gpio.setmode(gpio.BCM)
 
-        MOUSE_SENSITIVITY = 4.0  # 0-10
+        MOUSE_SENSITIVITY = 4  # 0-10
         MOUSE_DEADZONE = 40  # Values under this are zeroed
         ###################################### ADS1015 microdriver #################################
         # Register and other configuration values:
@@ -114,7 +114,7 @@ class GpioSender(Sender):
                 x = 0
             if abs(y) < MOUSE_DEADZONE:
                 y = 0
-            x = x >> (10 - MOUSE_SENSITIVITY)
-            y = y >> (10 - MOUSE_SENSITIVITY)
+            # x = x >> (10 - MOUSE_SENSITIVITY)
+            # y = y >> (10 - MOUSE_SENSITIVITY)
             y = -y
             Sender.sock.sendto(f"moved {x},{y}".encode(), (Sender.address[4][0], Sender.myport))
