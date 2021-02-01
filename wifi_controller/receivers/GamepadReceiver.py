@@ -14,11 +14,11 @@ class GamepadReceiver(Receiver):
         last_pos = (0, 0)
         while True:  # TODO Remove infinite loop
             data, sender = Receiver.read_data()
-            if sender in Receiver.joys:
+            if sender in self.joys:
                 j = self.joys[sender]
             else:
                 print(f"New Connection: {sender}")
-                j = pyvjoy.VJoyDevice(len(Receiver.joys) + 1)
+                j = pyvjoy.VJoyDevice(len(self.joys) + 1)
                 j.set_axis(pyvjoy.HID_USAGE_X, int(middle))
                 j.set_axis(pyvjoy.HID_USAGE_Y, int(middle))
                 self.joys[sender] = j  # TODO: Think about when to "close" connection
