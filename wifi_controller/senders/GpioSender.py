@@ -14,15 +14,25 @@ class GpioSender(Sender):
         player_one_button = Button(22)
         player_two_button = Button(23)
 
-        a_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 1".encode(), (Sender.address[4][0], Sender.myport))
+        a_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 1".encode(),
+                                                           (Sender.address[4][0], Sender.myport))
+        a_button.when_released = lambda: Sender.sock.sendto(f"released 1".encode(),
+                                                            (Sender.address[4][0], Sender.myport))
 
         x_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 2".encode(),
                                                            (Sender.address[4][0], Sender.myport))
+        x_button.when_released = lambda: Sender.sock.sendto(f"released 2".encode(),
+                                                            (Sender.address[4][0], Sender.myport))
+
         b_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 3".encode(),
                                                            (Sender.address[4][0], Sender.myport))
+        b_button.when_released = lambda: Sender.sock.sendto(f"released 3".encode(),
+                                                            (Sender.address[4][0], Sender.myport))
 
         y_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 4".encode(),
                                                            (Sender.address[4][0], Sender.myport))
+        y_button.when_released = lambda: Sender.sock.sendto(f"released 4".encode(),
+                                                            (Sender.address[4][0], Sender.myport))
 
         while True:
             pass
