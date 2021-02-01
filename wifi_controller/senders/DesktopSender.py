@@ -24,7 +24,6 @@ class DesktopSender(Sender):
 
         listener.join()
 
-
     @staticmethod
     def on_press(key):
         from pynput import keyboard

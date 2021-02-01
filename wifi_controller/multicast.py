@@ -29,7 +29,8 @@ def start_sender(group):
         from wifi_controller.senders.DesktopSender import DesktopSender
         DesktopSender(group)
     elif args.type == 'gpio':
-        pass
+        from wifi_controller.senders.GpioSender import GpioSender
+        GpioSender(group)
 
 
 def start_receiver(group):
