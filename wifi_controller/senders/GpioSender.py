@@ -24,17 +24,17 @@ class GpioSender(Sender):
         player_one_button = Button(22)
         player_two_button = Button(23)
 
-        a_button.when_pressed = lambda: press(1)
-        a_button.when_released = lambda: release(1)
+        a_button.when_pressed = lambda: press(2)
+        a_button.when_released = lambda: release(2)
 
-        x_button.when_pressed = lambda: press(2)
-        x_button.when_released = lambda: release(2)
+        x_button.when_pressed = lambda: press(4)
+        x_button.when_released = lambda: release(4)
 
-        b_button.when_pressed = lambda: press(3)
-        b_button.when_released = lambda: release(3)
+        b_button.when_pressed = lambda: press(1)
+        b_button.when_released = lambda: release(1)
 
-        y_button.when_pressed = lambda: press(4)
-        y_button.when_released = lambda: release(4)
+        y_button.when_pressed = lambda: press(3)
+        y_button.when_released = lambda: release(3)
 
         while True:
             pass
