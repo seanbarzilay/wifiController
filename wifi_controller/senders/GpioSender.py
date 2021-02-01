@@ -1,6 +1,16 @@
 from core.Sender import Sender
 
 
+def press(button):
+    print("press", button)
+    Sender.sock.sendto(f"press {button}".encode(), (Sender.address[4][0], Sender.myport))
+
+
+def release(button):
+    print("release", button)
+    Sender.sock.sendto(f"release {button}".encode(), (Sender.address[4][0], Sender.myport))
+
+
 class GpioSender(Sender):
     def __init__(self, group) -> None:
         super().__init__(group)
@@ -14,25 +24,17 @@ class GpioSender(Sender):
         player_one_button = Button(22)
         player_two_button = Button(23)
 
-        a_button.when_pressed = lambda: Sender.sock.sendto(f"press 13".encode(),
-                                                           (Sender.address[4][0], Sender.myport))
-        a_button.when_released = lambda: Sender.sock.sendto(f"release 13".encode(),
-                                                            (Sender.address[4][0], Sender.myport))
+        a_button.when_pressed = lambda: press(1)
+        a_button.when_released = lambda: release(1)
 
-        x_button.when_pressed = lambda: Sender.sock.sendto(f"press 14".encode(),
-                                                           (Sender.address[4][0], Sender.myport))
-        x_button.when_released = lambda: Sender.sock.sendto(f"release 14".encode(),
-                                                            (Sender.address[4][0], Sender.myport))
+        x_button.when_pressed = lambda: press(2)
+        x_button.when_released = lambda: release(2)
 
-        b_button.when_pressed = lambda: Sender.sock.sendto(f"press 15".encode(),
-                                                           (Sender.address[4][0], Sender.myport))
-        b_button.when_released = lambda: Sender.sock.sendto(f"release 15".encode(),
-                                                            (Sender.address[4][0], Sender.myport))
+        b_button.when_pressed = lambda: press(3)
+        b_button.when_released = lambda: release(3)
 
-        y_button.when_pressed = lambda: Sender.sock.sendto(f"press 16".encode(),
-                                                           (Sender.address[4][0], Sender.myport))
-        y_button.when_released = lambda: Sender.sock.sendto(f"release 16".encode(),
-                                                            (Sender.address[4][0], Sender.myport))
+        y_button.when_pressed = lambda: press(4)
+        y_button.when_released = lambda: release(4)
 
         while True:
             pass

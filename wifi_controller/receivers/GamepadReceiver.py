@@ -26,30 +26,30 @@ class GamepadReceiver(Receiver):
             if event == "goodbye":
                 del self.joys[sender]
             elif event == "press" or event == "release":
-                if len(actions) > 1:
-                    key = Key[actions]
-                else:
-                    key = actions
+                # if len(actions) > 1:
+                #     key = Key[actions]
+                # else:
+                key = actions
                 event = 1 if event == "press" else 0
-                if key == Key.up:
-                    key = 13
-                if key == Key.down:
-                    key = 14
-                if key == Key.left:
-                    key = 15
-                if key == Key.right:
-                    key = 16
-                else:
-                    try:
-                        key = int(key)
-                        if key == 0:
-                            continue
-                    except TypeError as e:
-                        print(e)
+                # if key == Key.up:
+                #     key = 13
+                # if key == Key.down:
+                #     key = 14
+                # if key == Key.left:
+                #     key = 15
+                # if key == Key.right:
+                #     key = 16
+                # else:
+                try:
+                    key = int(key)
+                    if key == 0:
                         continue
-                    except ValueError as e:
-                        print(e)
-                        continue
+                except TypeError as e:
+                    print(e)
+                    continue
+                except ValueError as e:
+                    print(e)
+                    continue
                 j.set_button(key, event)
             elif event == "moved":
                 x, y = actions.split(',')
