@@ -23,3 +23,6 @@ class GpioSender(Sender):
 
         y_button.when_pressed = lambda: Sender.sock.sendto(f"pressed 4".encode(),
                                                            (Sender.address[4][0], Sender.myport))
+
+        while True:
+            pass
