@@ -31,13 +31,15 @@ class GamepadReceiver(Receiver):
             if sender in self.joys:
                 j = self.joys[sender]
             else:
-                logging.info(f"New Connection: {sender}")
+                logging.info(f"New Connection: {sender}, {len(self.joys) + 1}")
                 j = pyvjoy.VJoyDevice(len(self.joys) + 1)
+                logging.info(f"{pyvjoy.HID_USAGE_X}, {int(middle)}")
                 j.set_axis(pyvjoy.HID_USAGE_X, int(middle))
                 j.set_axis(pyvjoy.HID_USAGE_Y, int(middle))
                 self.joys[sender] = j  # TODO: Think about when to "close" connection
             if data == "goodbye":
                 logging.info("bye bye")
+                self.joys[sender].__del__()
                 del self.joys[sender]
                 continue
             event, actions = data.split(" ")  # TODO: change to pattern matching with python3.10
