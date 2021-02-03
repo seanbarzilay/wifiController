@@ -1,4 +1,3 @@
-import sys
 from time import sleep
 
 from wifi_controller.core.Sender import Sender
@@ -16,12 +15,12 @@ def release(button):
 
 def close():
     print("goodbye")
-    Sender.sock.sendto("goodbye".encode(), (Sender.address[4][0], Sender.myport))
-    Sender.address = "Test"
-    sys.exit(0)
+    GpioSender.should_exit = True
 
 
 class GpioSender(Sender):
+    should_exit = False
+
     def __init__(self, group) -> None:
         super().__init__(group)
         from gpiozero import Button
@@ -122,6 +121,9 @@ class GpioSender(Sender):
         select_button.when_released = lambda: release(10)
 
         while True:
+            if GpioSender.should_exit:
+                Sender.sock.sendto("goodbye".encode(), (Sender.address[4][0], Sender.myport))
+                break
             try:
                 y = 800 - ads_read(0)
                 x = ads_read(1) - 800
