@@ -1,6 +1,15 @@
-colorzero==1.1
-gpiozero==1.5.1
+[desktop]
 pynput==1.7.2
 pyvjoy==1.0.1
 screeninfo==0.6.7
 six==1.15.0
+
+[rpi]
+colorzero==1.1
+gpiozero==1.5.1
+pigpio==1.78
+RPi.GPIO==0.7.0
+RPIO==0.10.0
+smbus==1.1.post2
+spidev==3.5
+

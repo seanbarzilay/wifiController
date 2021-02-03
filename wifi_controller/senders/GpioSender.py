@@ -1,3 +1,4 @@
+import sys
 from time import sleep
 
 from wifi_controller.core.Sender import Sender
@@ -11,6 +12,12 @@ def press(button):
 def release(button):
     print("release", button)
     Sender.sock.sendto(f"release {button}".encode(), (Sender.address[4][0], Sender.myport))
+
+
+def close():
+    print("goodbye")
+    Sender.sock.sendto("goodbye".encode(), (Sender.address[4][0], Sender.myport))
+    sys.exit(0)
 
 
 class GpioSender(Sender):
@@ -92,6 +99,8 @@ class GpioSender(Sender):
         select_button = Button(20)
         player_one_button = Button(22)
         player_two_button = Button(23)
+
+        player_one_button.when_pressed = lambda: close()
 
         a_button.when_pressed = lambda: press(2)
         a_button.when_released = lambda: release(2)

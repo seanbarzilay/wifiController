@@ -16,6 +16,11 @@ setup_requirements = [ ]
 
 test_requirements = [ ]
 
+extras_require = {
+        'desktop': ['pynput', 'pyvjoy'],
+        'rpi': ['gpiozero', 'RPi.GPIO', 'smbus']
+    }
+
 setup(
     author="Sean Barzilay",
     author_email='sesnbarzilay@gmail.com',
@@ -41,10 +46,11 @@ setup(
     keywords='wifi_controller',
     name='wifi_controller',
     packages=find_packages(include=['wifi_controller', 'wifi_controller.*']),
+    extras_require=extras_require,
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/sbarzilay/wifi_controller',
-    version='0.0.1',
+    version='0.0.2-dev',
     zip_safe=False,
 )
