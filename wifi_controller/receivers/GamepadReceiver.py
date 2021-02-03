@@ -1,5 +1,5 @@
+import logging
 from wifi_controller.core.Receiver import Receiver
-from pynput.keyboard import Key
 
 
 class GamepadReceiver(Receiver):
@@ -20,6 +20,7 @@ class GamepadReceiver(Receiver):
         return rightMin + (valueScaled * rightSpan)
 
     def start(self):
+        logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
         import pyvjoy
         middle = 0x8000 / 2
         min = -800
@@ -30,15 +31,17 @@ class GamepadReceiver(Receiver):
             if sender in self.joys:
                 j = self.joys[sender]
             else:
-                print(f"New Connection: {sender}")
+                logging.info(f"New Connection: {sender}")
                 j = pyvjoy.VJoyDevice(len(self.joys) + 1)
                 j.set_axis(pyvjoy.HID_USAGE_X, int(middle))
                 j.set_axis(pyvjoy.HID_USAGE_Y, int(middle))
                 self.joys[sender] = j  # TODO: Think about when to "close" connection
-            event, actions = data.split(" ")  # TODO: change to pattern matching with python3.10
-            if event == "goodbye":
+            if data == "goodbye":
+                logging.info("bye bye")
                 del self.joys[sender]
-            elif event == "press" or event == "release":
+                continue
+            event, actions = data.split(" ")  # TODO: change to pattern matching with python3.10
+            if event == "press" or event == "release":
                 # if len(actions) > 1:
                 #     key = Key[actions]
                 # else:
@@ -58,10 +61,10 @@ class GamepadReceiver(Receiver):
                     if key == 0:
                         continue
                 except TypeError as e:
-                    print(e)
+                    logging.info(e)
                     continue
                 except ValueError as e:
-                    print(e)
+                    logging.info(e)
                     continue
                 j.set_button(key, event)
             elif event == "moved":
@@ -86,7 +89,7 @@ class GamepadReceiver(Receiver):
                 # pos = (self.translate(pos[0], -800, 840, min, max), self.translate(pos[1], -800, 840, min, max))
                 # # dx = pos[0] - last_pos[0]
                 # # dy = pos[1] - last_pos[1]
-                # print(pos)
+                # logging.info(pos)
                 # j.set_axis(pyvjoy.HID_USAGE_X, int(middle + (int(pos[0]) * 100)))
                 # j.set_axis(pyvjoy.HID_USAGE_Y, int(middle + (int(pos[1]) * 100)))
 

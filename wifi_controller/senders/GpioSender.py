@@ -17,6 +17,7 @@ def release(button):
 def close():
     print("goodbye")
     Sender.sock.sendto("goodbye".encode(), (Sender.address[4][0], Sender.myport))
+    Sender.address = "Test"
     sys.exit(0)
 
 
