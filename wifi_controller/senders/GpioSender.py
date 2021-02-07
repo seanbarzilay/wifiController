@@ -20,27 +20,27 @@ def close():
 
 class Pin:
 
-    def __init__(self, id) -> None:
+    def __init__(self, pin_id) -> None:
         super().__init__()
-        self.id = id
+        self.id = pin_id
 
 
 class Button:
 
-    def __init__(self, pin, id) -> None:
+    def __init__(self, pin, pin_id) -> None:
         super().__init__()
         import digitalio
         io = digitalio.DigitalInOut(Pin(pin))
         io.direction = digitalio.Direction.INPUT
         io.pull = digitalio.Pull.UP
         self.io = io
-        self.id = id
+        self.id = pin_id
 
-    def is_pressed(self) -> bool:
-        return not self.io.value
+    def is_pressed(self) -> int:
+        return 1 if not self.io.value else 0
 
-    def is_released(self) -> bool:
-        return self.io.value
+    def is_released(self) -> int:
+        return 1 if self.io.value else 0
 
 
 class Stick:
@@ -59,11 +59,6 @@ class Stick:
 
     def get_voltage(self):
         return self.chan.voltage
-
-    def test(self):
-        retval = (self.get_value() << 8)
-        retval /= 16
-        return retval
 
 
 class GpioSender(Sender):
@@ -100,10 +95,9 @@ class GpioSender(Sender):
             for button in buttons:
                 states[button.id] = button.is_pressed()
             print(states)
-            print(f"stick_y: {800 - stick_y.test()}")
-            # print(f"stick_y value: {stick_y.get_value()}")
+            print(f"stick_y value: {stick_y.get_value()}")
             # print(f"stick_y voltage: {stick_y.get_voltage()}")
-            # print(f"stick_x value: {stick_x.get_value()}")
+            print(f"stick_x value: {stick_x.get_value()}")
             # print(f"stick_x voltage: {stick_x.get_voltage()}")
             sleep(1)
 
