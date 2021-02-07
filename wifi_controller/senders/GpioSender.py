@@ -52,7 +52,7 @@ class Stick:
         from adafruit_ads1x15.analog_in import AnalogIn
         i2c = busio.I2C(scl, sda)
         ads = ADS.ADS1015(i2c)
-        self.chan = AnalogIn(ads, pin)
+        self.chan = AnalogIn(ads, pin, 1)
 
     def get_value(self):
         return self.chan.value
