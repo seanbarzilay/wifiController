@@ -23,7 +23,8 @@ class Button:
     def __init__(self, pin) -> None:
         super().__init__()
         import digitalio
-        io = digitalio.DigitalInOut(pin)
+        from microcontroller import Pin
+        io = digitalio.DigitalInOut(Pin(pin))
         io.direction = digitalio.Direction.INPUT
         io.pull = digitalio.Pull.UP
         self.io = io
