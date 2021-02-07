@@ -18,7 +18,7 @@ test_requirements = [ ]
 
 extras_require = {
         'desktop': ['pynput', 'pyvjoy'],
-        'rpi': ['gpiozero', 'RPi.GPIO', 'smbus', 'adafruit-circuitpython-ads1x15'],
+        'rpi': ['gpiozero', 'RPi.GPIO', 'smbus', 'adafruit-circuitpython-ads1x15', 'PyYAML'],
         'dev': ['Flask', 'flask-cors']
     }
 

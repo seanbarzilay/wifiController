@@ -47,7 +47,7 @@
             }
         },
         mounted() {
-            axios.get("http://localhost:5000/config/" + this.$route.params.file)
+            axios.get("http://wificontroller:5000/config/" + this.$route.params.file)
                 .then((res) => {
                     const fileContents = res.data.data;
                     this.yamlEditor = CodeMirror.fromTextArea(this.$refs.textarea, {
@@ -77,7 +77,7 @@
                 return this.yamlEditor.getValue()
             },
             saveFile(value) {
-                axios.post("http://localhost:5000/config/" + this.$route.params.file, {text: value})
+                axios.post("http://wificontroller:5000/config/" + this.$route.params.file, {text: value})
                     .then((res) => {
                         console.info(res);
                         this.saved = true

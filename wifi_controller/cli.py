@@ -12,6 +12,7 @@ def main():
                         help='emulate keyboard '
                              'and mouse')
     parser.add_argument('-t', '--type', default='desktop', help='reads input from a desktop machine')
+    parser.add_argument('-c', '--config', type=str, help='config file for gpio sender')
     args = parser.parse_args()
 
     group_4 = '225.0.0.250'
@@ -20,19 +21,21 @@ def main():
     group = group_6 if args.v6 else group_4
 
     if args.sender:
-        start_sender(group, args.type)
+        start_sender(group, args.type, args.config)
     else:
         start_receiver(group, args.keyboard)
     return 0
 
 
-def start_sender(group, sender_type):
+def start_sender(group, sender_type, config):
     if sender_type == 'desktop':
         from wifi_controller.senders.DesktopSender import DesktopSender
         DesktopSender(group)
     elif sender_type == 'gpio':
         from wifi_controller.senders.GpioSender import GpioSender
-        GpioSender(group)
+        with open(config, 'r') as conf:
+            import yaml
+            GpioSender(group, yaml.safe_load(conf))
 
 
 def start_receiver(group, keyboard):

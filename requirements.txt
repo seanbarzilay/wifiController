@@ -13,6 +13,7 @@ RPi.GPIO==0.7.0
 RPIO==0.10.0
 smbus==1.1.post2
 spidev==3.5
+PyYAML==5.4.1
 
 [dev]
 Flask~=1.1.2

@@ -75,37 +75,41 @@ class Stick:
 class GpioSender(Sender):
     should_exit = False
 
-    def __init__(self, group) -> None:
+    def __init__(self, group, conf) -> None:
         super().__init__(group)
 
-        a_button = Button(12, 2)
-        x_button = Button(16, 4)
-        b_button = Button(6, 1)
-        y_button = Button(13, 3)
-        start_button = Button(26, 9)
-        select_button = Button(20, 10)
-        player_one_button = Button(22, 0)
-        player_two_button = Button(23, 0)
+        # a_button = Button(12, 2)
+        # x_button = Button(16, 4)
+        # b_button = Button(6, 1)
+        # y_button = Button(13, 3)
+        # start_button = Button(26, 9)
+        # select_button = Button(20, 10)
+        # player_one_button = Button(22, 0)
+        # player_two_button = Button(23, 0)
 
-        stick_y = Stick(0, 700)
-        stick_x = Stick(1, 700)
+        # stick_y = Stick(0, 700)
+        # stick_x = Stick(1, 700)
 
-        buttons = [
-            a_button,
-            x_button,
-            b_button,
-            y_button,
-            start_button,
-            select_button,
-            player_one_button,
-            player_two_button
-        ]
+        buttons = []
+        for button in conf['buttons']:
+            buttons.append(Button(button['pin'], button['value']))
+
+        # buttons = [
+        #     a_button,
+        #     x_button,
+        #     b_button,
+        #     y_button,
+        #     start_button,
+        #     select_button,
+        #     player_one_button,
+        #     player_two_button
+        # ]
 
         while not GpioSender.should_exit:
             states = {}
             for button in buttons:
                 states[button.id] = button.is_pressed()
-            states['x'] = stick_x.get_value()
-            states['y'] = stick_y.get_value()
+            # states['x'] = stick_x.get_value()
+            # states['y'] = stick_y.get_value()
             print(states)
             sleep(0.01)

@@ -35,7 +35,7 @@
         },
         methods: {
             getFileList() {
-                const path = 'http://localhost:5000/config';
+                const path = 'http://wificontroller:5000/config';
                 axios.get(path)
                     .then((res) => {
                         this.fileList = res.data.files
