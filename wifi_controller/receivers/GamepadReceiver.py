@@ -30,7 +30,31 @@ class GamepadReceiver(Receiver):
             else:
                 con = wPad()
                 self.joys[sender] = con
-            state = json.loads(data)
+                con._buttons = {
+                    # key button name is mapped to list of label,type,value(for on)
+                    'UP': ["Dpad", c_int, 1],
+                    'DOWN': ["Dpad", c_int, 2],
+                    'LEFT': ["Dpad", c_int, 4],
+                    'RIGHT': ["Dpad", c_int, 8],
+                    'START': ["BtnStart", c_bool, 1],
+                    'SELECT': ["BtnStart", c_bool, 1],
+                    'L3': ["BtnThumbL", c_bool, 1],
+                    'R3': ["BtnThumbR", c_bool, 1],
+                    'LB': ["BtnX", c_bool, 1],
+                    'RB': ["BtnX", c_bool, 1],
+                    'A': ["BtnA", c_bool, 1],
+                    'B': ["BtnB", c_bool, 1],
+                    'X': ["BtnX", c_bool, 1],
+                    'Y': ["BtnY", c_bool, 1],
+                    'Lx': ["AxisLx", c_short, 32767],
+                    'Ly': ["AxisLy", c_short, 32767],
+                    'Rx': ["AxisRx", c_short, 32767],
+                    'Ry': ["AxisRy", c_short, 32767],
+                    'LT': ["TriggerL", c_byte, 255],
+                    'RT': ["TriggerR", c_byte, 255]
+                }
+            logging.info(data)
+            state = json.loads(data.replace("'", '"'))
             con.playMoment(state)
 
         # import pyvjoy
