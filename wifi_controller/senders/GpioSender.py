@@ -45,31 +45,42 @@ class Button:
 
 class Stick:
 
-    def __init__(self, pin, deadzone, scl=3, sda=2) -> None:
+    def __init__(self, name, x_channel, y_channel, deadzone, scl=3, sda=2) -> None:
         super().__init__()
         import busio
         import adafruit_ads1x15.ads1015 as ADS
         from adafruit_ads1x15.analog_in import AnalogIn
         i2c = busio.I2C(scl, sda)
         ads = ADS.ADS1015(i2c)
-        self.chan = AnalogIn(ads, pin)
+        self.name = name
+        self.x_chan = AnalogIn(ads, x_channel)
+        self.y_chan = AnalogIn(ads, y_channel)
         self.deadzone = deadzone
         self.middle = 26256 / 2
 
     def get_value(self):
-        value = self.chan.value
-        if value > self.middle:
-            print("bigger: ", (value - self.middle))
-            if value - self.middle < self.deadzone:
-                value = self.middle
-        if value < self.middle:
-            print("smaller: ", (self.middle - value))
-            if self.middle - value < self.deadzone:
-                value = self.middle
-        return value
+        x_value = self.x_chan.value
+        if x_value > self.middle:
+            print("bigger: ", (x_value - self.middle))
+            if x_value - self.middle < self.deadzone:
+                x_value = self.middle
+        if x_value < self.middle:
+            print("smaller: ", (self.middle - x_value))
+            if self.middle - x_value < self.deadzone:
+                x_value = self.middle
+        y_value = self.y_chan.value
+        if y_value > self.middle:
+            print("bigger: ", (y_value - self.middle))
+            if y_value - self.middle < self.deadzone:
+                y_value = self.middle
+        if y_value < self.middle:
+            print("smaller: ", (self.middle - y_value))
+            if self.middle - y_value < self.deadzone:
+                y_value = self.middle
+        return x_value, y_value
 
     def get_voltage(self):
-        return self.chan.voltage
+        return self.x_chan.voltage, self.y_chan.voltage
 
 
 class GpioSender(Sender):
@@ -78,12 +89,6 @@ class GpioSender(Sender):
     def __init__(self, group, conf) -> None:
         super().__init__(group)
 
-        # a_button = Button(12, 2)
-        # x_button = Button(16, 4)
-        # b_button = Button(6, 1)
-        # y_button = Button(13, 3)
-        # start_button = Button(26, 9)
-        # select_button = Button(20, 10)
         # player_one_button = Button(22, 0)
         # player_two_button = Button(23, 0)
 
@@ -94,22 +99,15 @@ class GpioSender(Sender):
         for button in conf['buttons']:
             buttons.append(Button(button['pin'], button['value']))
 
-        # buttons = [
-        #     a_button,
-        #     x_button,
-        #     b_button,
-        #     y_button,
-        #     start_button,
-        #     select_button,
-        #     player_one_button,
-        #     player_two_button
-        # ]
+        sticks = []
+        for stick in conf['sticks']:
+            sticks.append(Stick(stick['name'], stick['x_channel'], stick['y_channel'], stick['deadzone']))
 
         while not GpioSender.should_exit:
             states = {}
             for button in buttons:
                 states[button.id] = button.is_pressed()
-            # states['x'] = stick_x.get_value()
-            # states['y'] = stick_y.get_value()
+            for stick in sticks:
+                states[stick.name] = stick.get_value()
             print(states)
             sleep(0.01)
