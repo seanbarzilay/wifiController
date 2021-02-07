@@ -37,7 +37,7 @@ class GpioSender(Sender):
         import board
         import digitalio
 
-        a_button = Button(board.D12)
+        a_button = Button(12)
 
         while True:
             print(a_button.io.value)
