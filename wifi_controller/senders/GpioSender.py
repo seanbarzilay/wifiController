@@ -45,7 +45,7 @@ class Button:
 
 class Stick:
 
-    def __init__(self, pin, scl=3, sda=2) -> None:
+    def __init__(self, pin, deadzone, scl=3, sda=2) -> None:
         super().__init__()
         import busio
         import adafruit_ads1x15.ads1015 as ADS
@@ -53,9 +53,20 @@ class Stick:
         i2c = busio.I2C(scl, sda)
         ads = ADS.ADS1015(i2c)
         self.chan = AnalogIn(ads, pin)
+        self.deadzone = deadzone
+        self.middle = 26256 / 2
 
     def get_value(self):
-        return self.chan.value
+        value = self.chan.value
+        if value > self.middle:
+            print("bigger: " + (value - self.middle))
+            if value - self.middle < self.deadzone:
+                value = self.middle
+        if value < self.middle:
+            print("smaller: " + (self.middle - value))
+            if self.middle - value < self.deadzone:
+                value = self.middle
+        return value
 
     def get_voltage(self):
         return self.chan.voltage
