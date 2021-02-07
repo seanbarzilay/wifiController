@@ -87,8 +87,8 @@ class GpioSender(Sender):
         player_one_button = Button(22, 0)
         player_two_button = Button(23, 0)
 
-        stick_y = Stick(0)
-        stick_x = Stick(1)
+        stick_y = Stick(0, 40)
+        stick_x = Stick(1, 40)
 
         buttons = [
             a_button,
