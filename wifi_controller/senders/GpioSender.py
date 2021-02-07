@@ -27,13 +27,20 @@ class Pin:
 
 class Button:
 
-    def __init__(self, pin) -> None:
+    def __init__(self, pin, id) -> None:
         super().__init__()
         import digitalio
         io = digitalio.DigitalInOut(Pin(pin))
         io.direction = digitalio.Direction.INPUT
         io.pull = digitalio.Pull.UP
         self.io = io
+        self.id = id
+
+    def is_pressed(self) -> bool:
+        return not self.io.value
+
+    def is_released(self) -> bool:
+        return self.io.value
 
 
 class GpioSender(Sender):
@@ -41,13 +48,32 @@ class GpioSender(Sender):
 
     def __init__(self, group) -> None:
         super().__init__(group)
-        import board
-        import digitalio
 
-        a_button = Button(12)
+        a_button = Button(12, 2)
+        x_button = Button(16, 4)
+        b_button = Button(6, 1)
+        y_button = Button(13, 3)
+        start_button = Button(26, 9)
+        select_button = Button(20, 10)
+        player_one_button = Button(22, 0)
+        player_two_button = Button(23, 0)
+
+        buttons = [
+            a_button,
+            x_button,
+            b_button,
+            y_button,
+            start_button,
+            select_button,
+            player_one_button,
+            player_two_button
+        ]
 
         while True:
-            print(a_button.io.value)
+            states = {}
+            for button in buttons:
+                states[button.id] = button.is_pressed()
+            print(states)
             sleep(1)
 
         # from gpiozero import Button
