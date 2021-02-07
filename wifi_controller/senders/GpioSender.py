@@ -28,14 +28,14 @@ class Pin:
 
 class Button:
 
-    def __init__(self, pin, pin_id) -> None:
+    def __init__(self, pin, button_id) -> None:
         super().__init__()
         import digitalio
         io = digitalio.DigitalInOut(Pin(pin))
         io.direction = digitalio.Direction.INPUT
         io.pull = digitalio.Pull.UP
         self.io = io
-        self.id = pin_id
+        self.id = button_id
 
     def is_pressed(self) -> int:
         return 1 if not self.io.value else 0
@@ -102,8 +102,8 @@ class GpioSender(Sender):
             states = {}
             for button in buttons:
                 states[button.id] = button.is_pressed()
-            for stick in sticks:
-                states[stick.name] = stick.get_value()
+            # for stick in sticks:
+            #     states[stick.name] = stick.get_value()
             logging.info(str(states))
             Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
             sleep(0.01)
