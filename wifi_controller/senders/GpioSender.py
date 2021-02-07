@@ -61,21 +61,21 @@ class Stick:
     def get_value(self):
         x_value = self.x_chan.value
         if x_value > self.middle:
-            print("bigger: ", (x_value - self.middle))
             if x_value - self.middle < self.deadzone:
+                print("x in deadzone")
                 x_value = self.middle
         if x_value < self.middle:
-            print("smaller: ", (self.middle - x_value))
             if self.middle - x_value < self.deadzone:
+                print("x in deadzone")
                 x_value = self.middle
         y_value = self.y_chan.value
         if y_value > self.middle:
-            print("bigger: ", (y_value - self.middle))
             if y_value - self.middle < self.deadzone:
+                print("y in deadzone")
                 y_value = self.middle
         if y_value < self.middle:
-            print("smaller: ", (self.middle - y_value))
             if self.middle - y_value < self.deadzone:
+                print("y in deadzone")
                 y_value = self.middle
         return x_value, y_value
 
