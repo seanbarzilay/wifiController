@@ -60,6 +60,11 @@ class Stick:
     def get_voltage(self):
         return self.chan.voltage
 
+    def test(self):
+        retval = (self.get_value() << 8) | self.get_voltage()[1]
+        retval /= 16
+        return retval
+
 
 class GpioSender(Sender):
     should_exit = False
@@ -95,10 +100,11 @@ class GpioSender(Sender):
             for button in buttons:
                 states[button.id] = button.is_pressed()
             print(states)
-            print(f"stick_y value: {800 - stick_y.get_value()}")
-            print(f"stick_y voltage: {stick_y.get_voltage()}")
-            print(f"stick_x value: {stick_x.get_value() - 800}")
-            print(f"stick_x voltage: {stick_x.get_voltage()}")
+            print(f"stick_y: {800 - stick_y.test()}")
+            # print(f"stick_y value: {stick_y.get_value()}")
+            # print(f"stick_y voltage: {stick_y.get_voltage()}")
+            # print(f"stick_x value: {stick_x.get_value()}")
+            # print(f"stick_x voltage: {stick_x.get_voltage()}")
             sleep(1)
 
         # from gpiozero import Button
