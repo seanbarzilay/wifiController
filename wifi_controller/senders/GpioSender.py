@@ -18,12 +18,18 @@ def close():
     GpioSender.should_exit = True
 
 
+class Pin:
+
+    def __init__(self, id) -> None:
+        super().__init__()
+        self.id = id
+
+
 class Button:
 
     def __init__(self, pin) -> None:
         super().__init__()
         import digitalio
-        from microcontroller import Pin
         io = digitalio.DigitalInOut(Pin(pin))
         io.direction = digitalio.Direction.INPUT
         io.pull = digitalio.Pull.UP
