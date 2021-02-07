@@ -43,6 +43,24 @@ class Button:
         return self.io.value
 
 
+class Stick:
+
+    def __init__(self, pin, scl=3, sda=2) -> None:
+        super().__init__()
+        import busio
+        import adafruit_ads1x15.ads1015 as ADS
+        from adafruit_ads1x15.analog_in import AnalogIn
+        i2c = busio.I2C(scl, sda)
+        ads = ADS.ADS1015(i2c)
+        self.chan = AnalogIn(ads, pin)
+
+    def get_value(self):
+        return self.chan.value
+
+    def get_voltage(self):
+        return self.chan.voltage
+
+
 class GpioSender(Sender):
     should_exit = False
 
@@ -57,6 +75,8 @@ class GpioSender(Sender):
         select_button = Button(20, 10)
         player_one_button = Button(22, 0)
         player_two_button = Button(23, 0)
+
+        stick = Stick(0)
 
         buttons = [
             a_button,
@@ -74,6 +94,8 @@ class GpioSender(Sender):
             for button in buttons:
                 states[button.id] = button.is_pressed()
             print(states)
+            print(f"stick value: {stick.get_value()}")
+            print(f"stick voltage: {stick.get_voltage()}")
             sleep(1)
 
         # from gpiozero import Button
