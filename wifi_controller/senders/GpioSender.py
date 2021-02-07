@@ -59,11 +59,11 @@ class Stick:
     def get_value(self):
         value = self.chan.value
         if value > self.middle:
-            print("bigger: " + (value - self.middle))
+            print("bigger: " , (value - self.middle))
             if value - self.middle < self.deadzone:
                 value = self.middle
         if value < self.middle:
-            print("smaller: " + (self.middle - value))
+            print("smaller: " , (self.middle - value))
             if self.middle - value < self.deadzone:
                 value = self.middle
         return value
