@@ -1,5 +1,5 @@
 import json
-from os import walk
+from os import listdir
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -12,7 +12,7 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/config', methods=['GET'])
 def list_config_files():
-    _, _, filenames = next(walk(config_path))
+    filenames = listdir(config_path)
     return jsonify({
         'files': filenames
     })
