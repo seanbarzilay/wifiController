@@ -5,6 +5,7 @@ screeninfo==0.6.7
 six==1.15.0
 
 [rpi]
+adafruit-circuitpython-ads1x15==2.2.6
 colorzero==1.1
 gpiozero==1.5.1
 pigpio==1.78
@@ -13,3 +14,6 @@ RPIO==0.10.0
 smbus==1.1.post2
 spidev==3.5
 
+[dev]
+Flask~=1.1.2
+flask-cors~=3.0.10
