@@ -1,3 +1,4 @@
+import logging
 from time import sleep
 
 from wifi_controller.core.Sender import Sender
@@ -62,20 +63,16 @@ class Stick:
         x_value = self.x_chan.value
         if x_value > self.middle:
             if x_value - self.middle < self.deadzone:
-                print("x in deadzone")
                 x_value = self.middle
         if x_value < self.middle:
             if self.middle - x_value < self.deadzone:
-                print("x in deadzone")
                 x_value = self.middle
         y_value = self.y_chan.value
         if y_value > self.middle:
             if y_value - self.middle < self.deadzone:
-                print("y in deadzone")
                 y_value = self.middle
         if y_value < self.middle:
             if self.middle - y_value < self.deadzone:
-                print("y in deadzone")
                 y_value = self.middle
         return x_value, y_value
 
@@ -88,12 +85,10 @@ class GpioSender(Sender):
 
     def __init__(self, group, conf) -> None:
         super().__init__(group)
+        logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
         # player_one_button = Button(22, 0)
         # player_two_button = Button(23, 0)
-
-        # stick_y = Stick(0, 700)
-        # stick_x = Stick(1, 700)
 
         buttons = []
         for button in conf['buttons']:
@@ -109,5 +104,6 @@ class GpioSender(Sender):
                 states[button.id] = button.is_pressed()
             for stick in sticks:
                 states[stick.name] = stick.get_value()
-            print(states)
+            logging.info(str(states))
+            Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
             sleep(0.01)
