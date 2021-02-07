@@ -38,6 +38,7 @@ setup(
     entry_points={
         'console_scripts': [
             'wifi_controller=wifi_controller.cli:main',
+            'config_server=wifi_controller.backend/fileServer:main'
         ],
     },
     install_requires=requirements,
