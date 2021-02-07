@@ -95,9 +95,9 @@ class GpioSender(Sender):
             for button in buttons:
                 states[button.id] = button.is_pressed()
             print(states)
-            print(f"stick_y value: {stick_y.get_value()}")
+            print(f"stick_y value: {800 - stick_y.get_value()}")
             print(f"stick_y voltage: {stick_y.get_voltage()}")
-            print(f"stick_x value: {stick_x.get_value()}")
+            print(f"stick_x value: {stick_x.get_value() - 800}")
             print(f"stick_x voltage: {stick_x.get_voltage()}")
             sleep(1)
 
