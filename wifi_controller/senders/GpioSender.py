@@ -61,7 +61,7 @@ class Stick:
         return self.chan.voltage
 
     def test(self):
-        retval = (self.get_value() << 8) | self.get_voltage()
+        retval = (self.get_value() << 8)
         retval /= 16
         return retval
 
