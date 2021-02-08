@@ -98,6 +98,7 @@ class GpioSender(Sender):
         for stick in conf['sticks']:
             sticks.append(Stick(stick['name'], stick['x_channel'], stick['y_channel'], stick['deadzone']))
 
+        last_state = {}
         while not GpioSender.should_exit:
             states = {}
             for button in buttons:
@@ -106,6 +107,8 @@ class GpioSender(Sender):
                 value = stick.get_value()
                 states[stick.name + 'x'] = value[0]
                 states[stick.name + 'y'] = value[1]
-            logging.info(str(states))
-            Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
+            if states != last_state:
+                logging.info(str(states))
+                Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
+                last_state = states
             sleep(0.01)
