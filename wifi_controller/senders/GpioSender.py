@@ -109,6 +109,10 @@ class GpioSender(Sender):
                 states[stick.name + 'y'] = float(format(value[1], '.16f'))
             if states != last_state:
                 logging.info(str(states))
-                Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
-                last_state = states
+                try:
+                    Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
+                    last_state = states
+                except OSError as e:
+                    logging.error(e)
+                    continue  # skip delay
             sleep(0.01)
