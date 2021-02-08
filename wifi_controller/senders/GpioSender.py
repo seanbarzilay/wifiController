@@ -105,8 +105,8 @@ class GpioSender(Sender):
                 states[button.id] = button.is_pressed()
             for stick in sticks:
                 value = stick.get_value()
-                states[stick.name + 'x'] = value[0]
-                states[stick.name + 'y'] = value[1]
+                states[stick.name + 'x'] = float(format(value[0], '.16f'))
+                states[stick.name + 'y'] = float(format(value[1], '.16f'))
             if states != last_state:
                 logging.info(str(states))
                 Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
