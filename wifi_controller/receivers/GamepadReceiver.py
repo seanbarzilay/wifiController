@@ -1,6 +1,9 @@
 import logging
 import json
+from time import time
+
 from wifi_controller.core.Receiver import Receiver
+from wifi_controller.core.EventAuditer import audit_event
 
 
 class GamepadReceiver(Receiver):
@@ -58,3 +61,4 @@ class GamepadReceiver(Receiver):
             state['Lx'] = self.translate(state['Lx'], 0, 26256, -1, 1)
             state['Ly'] = -1 * self.translate(state['Ly'], 0, 26256, -1, 1)
             con.playMoment(state)
+            audit_event('pc', state | {'time': time()})

@@ -1,8 +1,8 @@
 import logging
-from time import sleep
+from time import sleep, time
 
 from wifi_controller.core.Sender import Sender
-
+from wifi_controller.core.EventAuditer import audit_event
 
 def press(button):
     print("press", button)
@@ -111,6 +111,7 @@ class GpioSender(Sender):
                 logging.info(str(states))
                 try:
                     Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
+                    audit_event('gpio', states | {'time': time()})
                     last_state = states
                 except OSError as e:
                     logging.error(e)
