@@ -83,7 +83,7 @@ class Stick:
 class GpioSender(Sender):
     should_exit = False
 
-    def __init__(self, group, conf) -> None:
+    def __init__(self, group, conf, audit) -> None:
         super().__init__(group)
         logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -111,7 +111,8 @@ class GpioSender(Sender):
                 logging.info(str(states))
                 try:
                     Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
-                    audit_event('gpio', states | {'time': time()})
+                    if audit:
+                        audit_event('gpio', states | {'time': time()})
                     last_state = states
                 except OSError as e:
                     logging.error(e)

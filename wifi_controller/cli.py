@@ -13,6 +13,7 @@ def main():
                              'and mouse')
     parser.add_argument('-t', '--type', default='desktop', help='reads input from a desktop machine')
     parser.add_argument('-c', '--config', type=str, help='config file for gpio sender')
+    parser.add_argument('-a', '--audit', type=argparse.BooleanOptionalAction, help='audit events')
     args = parser.parse_args()
 
     group_4 = '225.0.0.250'
@@ -21,13 +22,13 @@ def main():
     group = group_6 if args.v6 else group_4
 
     if args.sender:
-        start_sender(group, args.type, args.config)
+        start_sender(group, args.type, args.config, args.audit)
     else:
-        start_receiver(group, args.keyboard)
+        start_receiver(group, args.keyboard, args.audit)
     return 0
 
 
-def start_sender(group, sender_type, config):
+def start_sender(group, sender_type, config, audit):
     if sender_type == 'desktop':
         from wifi_controller.senders.DesktopSender import DesktopSender
         DesktopSender(group)
@@ -35,16 +36,16 @@ def start_sender(group, sender_type, config):
         from wifi_controller.senders.GpioSender import GpioSender
         with open(config, 'r') as conf:
             import yaml
-            GpioSender(group, yaml.safe_load(conf))
+            GpioSender(group, yaml.safe_load(conf), audit)
 
 
-def start_receiver(group, keyboard):
+def start_receiver(group, keyboard, audit):
     if keyboard:
         from wifi_controller.receivers.KeyboardReceiver import KeyboardReceiver
         receiver = KeyboardReceiver(group)
     else:
         from wifi_controller.receivers.GamepadReceiver import GamepadReceiver
-        receiver = GamepadReceiver(group)
+        receiver = GamepadReceiver(group, audit)
     receiver.start()
 
 

@@ -8,9 +8,10 @@ from wifi_controller.core.EventAuditer import audit_event
 
 class GamepadReceiver(Receiver):
 
-    def __init__(self, group) -> None:
+    def __init__(self, group, audit) -> None:
         super().__init__(group)
         self.joys = {}
+        self.audit = audit
 
     def translate(self, value, leftMin, leftMax, rightMin, rightMax):
         # Figure out how 'wide' each range is
@@ -61,4 +62,5 @@ class GamepadReceiver(Receiver):
             state['Lx'] = self.translate(state['Lx'], 0, 26256, -1, 1)
             state['Ly'] = -1 * self.translate(state['Ly'], 0, 26256, -1, 1)
             con.playMoment(state)
-            audit_event('pc', state | {'time': time()})
+            if self.audit:
+                audit_event('pc', state | {'time': time()})
