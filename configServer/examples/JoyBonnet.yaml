@@ -1,0 +1,25 @@
+buttons:
+    - name: a # JoyBonnet a button
+      pin: 12
+      value: B # xinput B button
+    - name: x # JoyBonnet x button
+      pin: 16
+      value: Y # xinput Y button
+    - name: b # JoyBonnet b button
+      pin: 6
+      value: A # xinput A button
+    - name: y # JoyBonnet y button
+      pin: 13
+      value: X # xinput X button
+    - name: start
+      pin: 26
+      value: START
+    - name: select
+      pin: 20
+      value: SELECT
+
+sticks:
+    - name: L
+      x_channel: 1
+      y_channel: 0
+      deadzone: 1200
