@@ -6,23 +6,24 @@ from wifi_controller.core.Receiver import Receiver
 from wifi_controller.core.EventAuditor import audit_event
 
 
+def translate(value, left_min, left_max, right_min, right_max):
+    # Figure out how 'wide' each range is
+    left_span = left_max - left_min
+    right_span = right_max - right_min
+
+    # Convert the left range into a 0-1 range (float)
+    value_scaled = float(value - left_min) / float(left_span)
+
+    # Convert the 0-1 range into a value in the right range.
+    return right_min + (value_scaled * right_span)
+
+
 class GamepadReceiver(Receiver):
 
     def __init__(self, group, audit) -> None:
         super().__init__(group)
         self.joys = {}
         self.audit = audit
-
-    def translate(self, value, leftMin, leftMax, rightMin, rightMax):
-        # Figure out how 'wide' each range is
-        leftSpan = leftMax - leftMin
-        rightSpan = rightMax - rightMin
-
-        # Convert the left range into a 0-1 range (float)
-        valueScaled = float(value - leftMin) / float(leftSpan)
-
-        # Convert the 0-1 range into a value in the right range.
-        return rightMin + (valueScaled * rightSpan)
 
     def start(self):
         logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
@@ -35,6 +36,7 @@ class GamepadReceiver(Receiver):
                 con = wPad()
                 self.joys[sender] = con
                 con._buttons = {
+                    # TODO: should I export this to conf?
                     # key button name is mapped to list of label,type,value(for on)
                     'UP': ["Dpad", c_int, 1],
                     'DOWN': ["Dpad", c_int, 2],
@@ -60,11 +62,11 @@ class GamepadReceiver(Receiver):
             logging.info(data)
             state = json.loads(data.replace("'", '"'))
             if 'Lx' in state:
-                state['Lx'] = self.translate(state['Lx'], 0, 26256, -1, 1)
-                state['Ly'] = -1 * self.translate(state['Ly'], 0, 26256, -1, 1)
+                state['Lx'] = translate(state['Lx'], 0, 26256, -1, 1)
+                state['Ly'] = -1 * translate(state['Ly'], 0, 26256, -1, 1)
             if 'Rx' in state:
-                state['Rx'] = self.translate(state['Rx'], 0, 26256, -1, 1)
-                state['Ry'] = -1 * self.translate(state['Ry'], 0, 26256, -1, 1)
+                state['Rx'] = translate(state['Rx'], 0, 26256, -1, 1)
+                state['Ry'] = -1 * translate(state['Ry'], 0, 26256, -1, 1)
             con.playMoment(state)
             if self.audit:
                 audit_event('pc.txt', state | {'time': time()})
