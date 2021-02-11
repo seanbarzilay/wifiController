@@ -3,8 +3,8 @@ pynput==1.7.2
 pyvjoy==1.0.1
 screeninfo==0.6.7
 six==1.15.0
-gamepyd
 pandas==1.2.2
+gamepyd==0.1.0
 
 [rpi]
 adafruit-circuitpython-ads1x15==2.2.6
