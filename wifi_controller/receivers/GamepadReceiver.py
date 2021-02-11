@@ -59,8 +59,12 @@ class GamepadReceiver(Receiver):
                 }
             logging.info(data)
             state = json.loads(data.replace("'", '"'))
-            state['Lx'] = self.translate(state['Lx'], 0, 26256, -1, 1)
-            state['Ly'] = -1 * self.translate(state['Ly'], 0, 26256, -1, 1)
+            if 'Lx' in state:
+                state['Lx'] = self.translate(state['Lx'], 0, 26256, -1, 1)
+                state['Ly'] = -1 * self.translate(state['Ly'], 0, 26256, -1, 1)
+            if 'Rx' in state:
+                state['Rx'] = self.translate(state['Rx'], 0, 26256, -1, 1)
+                state['Ry'] = -1 * self.translate(state['Ry'], 0, 26256, -1, 1)
             con.playMoment(state)
             if self.audit:
                 audit_event('pc.txt', state | {'time': time()})
