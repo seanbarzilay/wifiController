@@ -4,7 +4,7 @@ pyvjoy==1.0.1
 screeninfo==0.6.7
 six==1.15.0
 gamepyd
-pandas
+pandas==1.2.2
 
 [rpi]
 adafruit-circuitpython-ads1x15==2.2.6
