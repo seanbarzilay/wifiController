@@ -36,7 +36,8 @@ def start_sender(group, sender_type, config, audit):
         from wifi_controller.senders.GpioSender import GpioSender
         with open(config, 'r') as conf:
             import yaml
-            GpioSender(group, yaml.safe_load(conf), audit)
+            config = yaml.safe_load(conf)
+        GpioSender(group, config, audit)
 
 
 def start_receiver(group, keyboard, audit):

@@ -3,7 +3,7 @@ import json
 from time import time
 
 from wifi_controller.core.Receiver import Receiver
-from wifi_controller.core.EventAuditer import audit_event
+from wifi_controller.core.EventAuditor import audit_event
 
 
 class GamepadReceiver(Receiver):
@@ -63,4 +63,4 @@ class GamepadReceiver(Receiver):
             state['Ly'] = -1 * self.translate(state['Ly'], 0, 26256, -1, 1)
             con.playMoment(state)
             if self.audit:
-                audit_event('pc', state | {'time': time()})
+                audit_event('pc.txt', state | {'time': time()})
