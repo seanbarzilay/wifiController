@@ -4,15 +4,6 @@ from time import sleep, time
 from wifi_controller.core.Sender import Sender
 from wifi_controller.core.EventAuditor import audit_event
 
-def press(button):
-    print("press", button)
-    Sender.sock.sendto(f"press {button}".encode(), (Sender.address[4][0], Sender.myport))
-
-
-def release(button):
-    print("release", button)
-    Sender.sock.sendto(f"release {button}".encode(), (Sender.address[4][0], Sender.myport))
-
 
 def close():
     print("goodbye")
@@ -46,7 +37,7 @@ class Button:
 
 class Stick:
 
-    def __init__(self, name, x_channel, y_channel, deadzone, scl=3, sda=2) -> None:
+    def __init__(self, name, x_channel, y_channel, dead_zone, scl=3, sda=2) -> None:
         super().__init__()
         import busio
         import adafruit_ads1x15.ads1015 as ADS
@@ -56,23 +47,23 @@ class Stick:
         self.name = name
         self.x_chan = AnalogIn(ads, x_channel)
         self.y_chan = AnalogIn(ads, y_channel)
-        self.deadzone = deadzone
+        self.dead_zone = dead_zone
         self.middle = 26256 / 2
 
     def get_value(self):
         x_value = self.x_chan.value
         if x_value > self.middle:
-            if x_value - self.middle < self.deadzone:
+            if x_value - self.middle < self.dead_zone:
                 x_value = self.middle
         if x_value < self.middle:
-            if self.middle - x_value < self.deadzone:
+            if self.middle - x_value < self.dead_zone:
                 x_value = self.middle
         y_value = self.y_chan.value
         if y_value > self.middle:
-            if y_value - self.middle < self.deadzone:
+            if y_value - self.middle < self.dead_zone:
                 y_value = self.middle
         if y_value < self.middle:
-            if self.middle - y_value < self.deadzone:
+            if self.middle - y_value < self.dead_zone:
                 y_value = self.middle
         return x_value, y_value
 
