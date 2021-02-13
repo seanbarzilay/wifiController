@@ -104,7 +104,7 @@ class GpioSender(Sender):
                 try:
                     Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
                     if audit:
-                        audit_event('gpio.txt', states | {'time': datetime.now()})
+                        audit_event('gpio.txt', states | {'time': str(datetime.now())})
                     last_state = states
                 except OSError as e:
                     logging.error(e)

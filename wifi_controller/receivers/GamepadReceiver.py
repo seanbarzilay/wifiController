@@ -69,4 +69,4 @@ class GamepadReceiver(Receiver):
                 state['Ry'] = -1 * translate(state['Ry'], 0, 26256, -1, 1)
             con.playMoment(state)
             if self.audit:
-                audit_event('pc.txt', state | {'time': datetime.now()})
+                audit_event('pc.txt', state | {'time': str(datetime.now())})
