@@ -11,9 +11,9 @@ def main():
     parser.add_argument('-k', '--keyboard', default=False, action=argparse.BooleanOptionalAction,
                         help='emulate keyboard '
                              'and mouse')
+    parser.add_argument('-a', '--audit', default=False, action=argparse.BooleanOptionalAction, help='audit events')
     parser.add_argument('-t', '--type', default='desktop', help='reads input from a desktop machine')
     parser.add_argument('-c', '--config', type=str, help='config file for gpio sender')
-    parser.add_argument('-a', '--audit', default=False, type=argparse.BooleanOptionalAction, help='audit events')
     args = parser.parse_args()
 
     group_4 = '225.0.0.250'
