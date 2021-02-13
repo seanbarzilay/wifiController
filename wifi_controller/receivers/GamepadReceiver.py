@@ -1,6 +1,6 @@
 import logging
 import json
-from time import time
+from datetime import datetime
 
 from wifi_controller.core.Receiver import Receiver
 from wifi_controller.core.EventAuditor import audit_event
@@ -69,4 +69,4 @@ class GamepadReceiver(Receiver):
                 state['Ry'] = -1 * translate(state['Ry'], 0, 26256, -1, 1)
             con.playMoment(state)
             if self.audit:
-                audit_event('pc.txt', state | {'time': time()})
+                audit_event('pc.txt', state | {'time': datetime.now()})

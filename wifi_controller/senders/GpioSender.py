@@ -1,5 +1,6 @@
 import logging
-from time import sleep, time
+from time import sleep
+from datetime import datetime
 
 from wifi_controller.core.Sender import Sender
 from wifi_controller.core.EventAuditor import audit_event
@@ -103,7 +104,7 @@ class GpioSender(Sender):
                 try:
                     Sender.sock.sendto(str(states).encode(), (Sender.address[4][0], Sender.myport))
                     if audit:
-                        audit_event('gpio.txt', states | {'time': time()})
+                        audit_event('gpio.txt', states | {'time': datetime.now()})
                     last_state = states
                 except OSError as e:
                     logging.error(e)
