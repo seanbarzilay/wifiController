@@ -1,5 +1,5 @@
 [desktop]
-pynput==1.7.3
+pynput==1.7.5
 pyvjoy==1.0.1
 screeninfo==0.6.7
 six==1.15.0
