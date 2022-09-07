@@ -7,7 +7,7 @@ pandas==1.2.2
 gamepyd==0.1.0
 
 [rpi]
-adafruit-circuitpython-ads1x15==2.2.6
+adafruit-circuitpython-ads1x15==2.2.20
 colorzero==1.1
 gpiozero==1.5.1
 pigpio==1.78
