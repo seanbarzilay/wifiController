@@ -3,7 +3,7 @@ pynput==1.7.3
 pyvjoy==1.0.1
 screeninfo==0.6.7
 six==1.15.0
-pandas==1.2.2
+pandas==2.1.1
 gamepyd==0.1.0
 
 [rpi]
