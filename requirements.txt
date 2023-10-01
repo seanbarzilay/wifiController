@@ -9,7 +9,7 @@ gamepyd==0.1.0
 [rpi]
 adafruit-circuitpython-ads1x15==2.2.6
 colorzero==1.1
-gpiozero==1.5.1
+gpiozero==2.0
 pigpio==1.78
 RPi.GPIO==0.7.0
 RPIO==0.10.0
