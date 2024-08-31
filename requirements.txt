@@ -19,4 +19,4 @@ PyYAML==5.4.1
 
 [dev]
 Flask~=1.1.2
-flask-cors~=3.0.10
+flask-cors==5.0.0
