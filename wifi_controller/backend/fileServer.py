@@ -1,4 +1,5 @@
 import json
+import os
 from os import listdir
 
 from flask import Flask, jsonify, request
@@ -22,7 +23,8 @@ def list_config_files():
 def config_file(file_name):
     if request.method == 'GET':
         try:
-            with open(f'{config_path}/{file_name}', 'r') as f:
+            file_path = os.path.join(config_path, file_name)
+            with open(file_path, 'r') as f:
                 data = f.read()
                 return jsonify({
                     'data': data
@@ -33,7 +35,8 @@ def config_file(file_name):
             }))
     else:
         data = json.loads(request.data.decode())['text']
-        with open(f'{config_path}/{file_name}', 'w') as f:
+        file_path = os.path.join(config_path, file_name)
+        with open(file_path, 'w') as f:
             f.write(data)
         return jsonify({
             'result': 'Successfully update config file'
