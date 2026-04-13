@@ -23,7 +23,9 @@ def list_config_files():
 def config_file(file_name):
     if request.method == 'GET':
         try:
-            file_path = os.path.join(config_path, file_name)
+            file_path = os.path.realpath(os.path.join(config_path, file_name))
+            if not file_path.startswith(os.path.realpath(config_path) + os.sep):
+                return jsonify({'error': 'Invalid file name'}), 400
             with open(file_path, 'r') as f:
                 data = f.read()
                 return jsonify({
@@ -35,7 +37,9 @@ def config_file(file_name):
             }))
     else:
         data = json.loads(request.data.decode())['text']
-        file_path = os.path.join(config_path, file_name)
+        file_path = os.path.realpath(os.path.join(config_path, file_name))
+        if not file_path.startswith(os.path.realpath(config_path) + os.sep):
+            return jsonify({'error': 'Invalid file name'}), 400
         with open(file_path, 'w') as f:
             f.write(data)
         return jsonify({
